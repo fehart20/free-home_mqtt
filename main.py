@@ -1,12 +1,13 @@
+import os
 import asyncio
 import websockets
 from base64 import b64encode
 import json
 import paho.mqtt.client as mqtt
 
-username = ''  # Set this to your username
-password = ''  # Set this to you password
-sysap_ip = ''  # Set this to the IP address of your Sysap
+username = os.environ.get('USERNAME', '')  # Set this to your username
+password = os.environ.get('PASSWORD', '')  # Set this to you password
+sysap_ip = os.environ.get('SYSAP_IP', '')  # Set this to the IP address of your Sysap
 
 basic_auth = b64encode((username + ":" + password).encode()).decode("ascii")
 
@@ -30,8 +31,8 @@ async def ws_main():
 
 def publish_to_mqtt(data):
     client = mqtt.Client()
-    mqtt_broker_address = ""  # Replace with your MQTT broker address
-    mqtt_broker_port = 1883  # Replace with your MQTT broker port
+    mqtt_broker_address = os.environ.get('MQTT_IP', '')  # Replace with your MQTT broker address
+    mqtt_broker_port = int(os.environ.get('MQTT_PORT', 1883))  # Replace with your MQTT broker port
 
     client.connect(mqtt_broker_address, mqtt_broker_port, 60)
 
