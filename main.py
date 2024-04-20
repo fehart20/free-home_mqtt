@@ -35,7 +35,7 @@ async def ws_main():
 
 
 def publish_to_mqtt(data):
-    client = mqtt.Client()
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
     mqtt_broker_address = os.environ.get(
         'MQTT_IP', '')  # Replace with your MQTT broker address
     mqtt_broker_port = int(os.environ.get(
